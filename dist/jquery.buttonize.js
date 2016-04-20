@@ -2,22 +2,24 @@
     var Buttonize = function(element, options) {
         this.element = $(element);
 
-        this.config = $.extend({
+        // Default module configuration
+        this.defaults = {
             a11y: false,
-            a11yText: 'Cliquer pour ouvrir',
             unbuttonize: false,
             toTag: '',
-            customGlobalClasses: {}
-        }, options || {});
+            labels: {
+                ariaOpen: 'Cliquer pour ouvrir'
+            }
+        };
 
-        this.classes = $.extend({
-            active: 'is-active',
-            open: 'is-open',
-            hover: 'is-hover',
-            clicked: 'is-clicked',
-            extern: 'is-external',
-            error: 'is-error'
-        }, (window.classes !== undefined ? window.classes : this.config.customGlobalClasses) || {});
+        // Merge default classes with window.project.classes
+        this.classes = $.extend(true, this.defaults.classes, (window.project ? window.project.classes : {}));
+
+        // Merge default labels with window.project.labels
+        this.labels = $.extend(true, this.defaults.labels, (window.project ? window.project.labels : {}));
+
+        // Merge default config with custom config
+        this.config = $.extend(true, this.defaults, options || {});
 
         this.init();
     };
@@ -29,7 +31,7 @@
             var tagHtml = this.element.html(),
                 tagAttr = this.getAttributes(this.element[0]),
                 tagAria = this.config.a11y ? ' aria-live="polite"' : '',
-                tagA11yText = this.config.a11y ? '<span class="visuallyhidden">' + this.config.a11yText + '</span>' : '',
+                tagA11yText = this.config.a11y ? '<span class="visuallyhidden">' + this.labels.ariaOpen + '</span>' : '',
                 button = '<button ' + tagAttr.join(' ') + tagAria + '>' + tagHtml + tagA11yText + '</button>';
 
             if (this.config.unbuttonize) {
