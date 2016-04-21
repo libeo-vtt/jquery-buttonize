@@ -1,4 +1,4 @@
-# VTT jQuery Buttonize Plugin
+# jQuery Buttonize Plugin
 Transform any HTML element into a button.
 
 ## Usage
@@ -18,7 +18,7 @@ Transform any HTML element into a button.
 3. Call the plugin:
 
 	```javascript
-	$("#element").buttonize({
+	$('#element').buttonize({
 		// config
 	});
 	```
